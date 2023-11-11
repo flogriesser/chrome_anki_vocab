@@ -258,7 +258,7 @@ body {
   height: 22px;
   display: none;
   place-items: center;
-  background: #4da6ff; /* Choose a different color for distinction */
+  background: #4da6ff;
   border-radius: 5px;
   cursor: pointer;
   transition: opacity 0.3s ease;

@@ -33,6 +33,14 @@ function addWordAndTranslation(inputValue) {
           console.log("New word added:", inputValue);
           console.log("Words stored:", words);
         });
+
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: '../images/dictionary-icon.png',
+          title: 'Word Added',
+          message: `Word: ${inputValue}\nTranslation: ${translatedText}`
+        });
+
       } else {
         console.log("Word already exists:", inputValue);
       }
@@ -48,6 +56,13 @@ function addWordAndTranslation(inputValue) {
         words.push({ original: inputValue, translated: translatedValue });
         chrome.storage.local.set({ words: words }, function () {
           console.log("New word added with no translation:", inputValue);
+        });
+
+        chrome.notifications.create({
+          type: 'basic',
+          iconUrl: '../images/dictionary-icon.png',
+          title: 'Word Added',
+          message: `Word: ${word}\nTranslation: Not found`
         });
       }
     });

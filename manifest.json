@@ -2,6 +2,7 @@
    "name": "Anki Vocabulary",
    "permissions": [
       "storage",
+      "notifications",
       "contextMenus"
    ],
    "manifest_version": 3,

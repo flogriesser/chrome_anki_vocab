@@ -22,8 +22,7 @@ const languages = {
   "ca": "Catalan",
   "ceb": "Cebuano",
   "ny": "Chichewa",
-  "zh-CN": "Chinese (Simplified)",
-  "zh-TW": "Chinese (Traditional)",
+  "zh-CN": "Chinese",
   "co": "Corsican",
   "hr": "Croatian",
   "cs": "Czech",
@@ -59,7 +58,7 @@ const languages = {
   "kk": "Kazakh",
   "km": "Khmer",
   "ko": "Korean",
-  "ku": "Kurdish (Kurmanji)",
+  "ku": "Kurdish",
   "ky": "Kyrgyz",
   "lo": "Lao",
   "la": "Latin",
@@ -74,7 +73,7 @@ const languages = {
   "mi": "Maori",
   "mr": "Marathi",
   "mn": "Mongolian",
-  "my": "Myanmar (Burmese)",
+  "my": "Myanmar",
   "ne": "Nepali",
   "no": "Norwegian",
   "ps": "Pashto",
@@ -124,9 +123,16 @@ addWordInput.oninput = () => {
   wordExist.style.display = "none";
 };
 
+document.getElementById('languageSelect').addEventListener('change', function () {
+  const selectedLanguage = this.value;
+  chrome.storage.local.set({ 'targetLanguage': selectedLanguage }, function () {
+    console.log('Target language saved:', selectedLanguage);
+  });
+});
+
 function updateDisplayedWords(pattern) {
   const con_words = document.querySelector(".class_vocab");
-  con_words.innerHTML = ''; 
+  con_words.innerHTML = '';
 
   chrome.storage.local.get("words", function (data) {
     const words = data.words || [];
@@ -156,59 +162,63 @@ addWordInput.oninput = () => {
 
 
 function addWordAndTranslation(inputValue) {
-  const apiUrl = 'https://translate.googleapis.com/translate_a/single';
-  const params = new URLSearchParams([
-    ["client", "gtx"],
-    ["sl", "auto"], // Source language auto-detection
-    ["tl", "en"],  // Target language set to English
-    ["dt", "t"],   // Requesting translation
-    ["q", inputValue]
-  ]);
+  chrome.storage.local.get('targetLanguage', function (data) {
+    const targetLanguage = data.targetLanguage || 'en'; // Default to English if not set
 
-  fetch(`${apiUrl}?${params.toString()}`, {
-    method: 'GET',
-  })
-  .then(response => response.json())
-  .then(data => {
-    let translatedText = data[0][0][0] || "No translation";
-    console.log(response);
-    console.log(`${apiUrl}?${params.toString()}`);
+    const apiUrl = 'https://translate.googleapis.com/translate_a/single';
+    const params = new URLSearchParams([
+      ["client", "gtx"],
+      ["sl", "auto"], // Source language auto-detection
+      ["tl", targetLanguage],  // Target language set to English
+      ["dt", "t"],   // Requesting translation
+      ["q", inputValue]
+    ]);
 
-    chrome.storage.local.get("words", function (result) {
-      let words = result.words || [];
-      if (!words.some(wordObj => wordObj.original === inputValue)) {
-        words.push({ original: inputValue, translated: translatedText });
-        chrome.storage.local.set({ words: words }, function () {
-          console.log("New word added:", inputValue);
-          console.log("Words stored:", words);
-          updateDisplayedWords('');
+    fetch(`${apiUrl}?${params.toString()}`, {
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        let translatedText = data[0][0][0] || "No translation";
+        console.log(response);
+        console.log(`${apiUrl}?${params.toString()}`);
+
+        chrome.storage.local.get("words", function (result) {
+          let words = result.words || [];
+          if (!words.some(wordObj => wordObj.original === inputValue)) {
+            words.push({ original: inputValue, translated: translatedText });
+            chrome.storage.local.set({ words: words }, function () {
+              console.log("New word added:", inputValue);
+              console.log("Words stored:", words);
+              updateDisplayedWords('');
+            });
+          } else {
+            console.log("Word already exists:", inputValue);
+            updateDisplayedWords('');
+          }
         });
-      } else {
-        console.log("Word already exists:", inputValue);
-        updateDisplayedWords('');
-      }
-    });
-  })
-  .catch(error => {
-    console.error('Error translating word:', error);
-    let translatedValue = "No translation";
+      })
+      .catch(error => {
+        console.error('Error translating word:', error);
+        let translatedValue = "No translation";
 
-    chrome.storage.local.get("words", function (result) {
-      let words = result.words || [];
-      if (!words.some(wordObj => wordObj.original === inputValue)) {
-        words.push({ original: inputValue, translated: translatedValue });
-        chrome.storage.local.set({ words: words }, function () {
-          console.log("New word added with no translation:", inputValue);
-          updateDisplayedWords('');
+        chrome.storage.local.get("words", function (result) {
+          let words = result.words || [];
+          if (!words.some(wordObj => wordObj.original === inputValue)) {
+            words.push({ original: inputValue, translated: translatedValue });
+            chrome.storage.local.set({ words: words }, function () {
+              console.log("New word added with no translation:", inputValue);
+              updateDisplayedWords('');
+            });
+          }
         });
-      }
-    });
+      });
   });
 }
 
 
 
-  
+
 addWordForm.onsubmit = (e) => {
   e.preventDefault();
   if (addWordInput.value != null && addWordInput.value.trim() !== "") {
@@ -225,27 +235,27 @@ addWordForm.onsubmit = (e) => {
 
 function saveEditedWord(inputField, wordObj, box, translatedWordDiv) {
   const editedValue = inputField.value.trim();
-  
+
   if (editedValue !== wordObj.translated) {
-      wordObj.translated = editedValue;
+    wordObj.translated = editedValue;
 
-      chrome.storage.local.get("words", function (data) {
-          const words = data.words || [];
-          const index = words.findIndex(w => w.original === wordObj.original);
-          if (index !== -1) {
-              words[index] = wordObj;
-              chrome.storage.local.set({ words: words });
-          }
-      });
+    chrome.storage.local.get("words", function (data) {
+      const words = data.words || [];
+      const index = words.findIndex(w => w.original === wordObj.original);
+      if (index !== -1) {
+        words[index] = wordObj;
+        chrome.storage.local.set({ words: words });
+      }
+    });
 
-      translatedWordDiv.innerText = editedValue;
+    translatedWordDiv.innerText = editedValue;
   }
 
   box.replaceChild(translatedWordDiv, inputField);
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const languageSelect = document.getElementById('languageSelect');
   for (const [code, name] of Object.entries(languages)) {
     const option = document.createElement('option');
@@ -253,8 +263,14 @@ document.addEventListener('DOMContentLoaded', function() {
     option.textContent = name;
     languageSelect.appendChild(option);
   }
+  // Set the selected language from saved value
+  chrome.storage.local.get('targetLanguage', function (data) {
+    if (data.targetLanguage) {
+      languageSelect.value = data.targetLanguage;
+    }
+  });
 });
-  
+
 
 const empty = document.createElement("p");
 empty.innerText = "There are no words yet.";
@@ -299,22 +315,22 @@ const word = (wordObj) => {
   const con_words = document.querySelector(".class_vocab");
 
   if (con_words.firstChild) {
-      con_words.insertBefore(box, con_words.firstChild);
+    con_words.insertBefore(box, con_words.firstChild);
   } else {
-      con_words.appendChild(box);
+    con_words.appendChild(box);
   }
 
   deleteButton.onclick = () => {
-      chrome.storage.local.get("words", function (data) {
-          const words = data.words || [];
-          const index = words.findIndex(w => w.original === wordObj.original && w.translated === wordObj.translated);
-          if (index !== -1) {
-              words.splice(index, 1);
-              chrome.storage.local.set({ words: words }, function () {
-                  con_words.removeChild(box);
-              });
-          }
-      });
+    chrome.storage.local.get("words", function (data) {
+      const words = data.words || [];
+      const index = words.findIndex(w => w.original === wordObj.original && w.translated === wordObj.translated);
+      if (index !== -1) {
+        words.splice(index, 1);
+        chrome.storage.local.set({ words: words }, function () {
+          con_words.removeChild(box);
+        });
+      }
+    });
   };
 
   editButton.onclick = () => {
@@ -322,7 +338,7 @@ const word = (wordObj) => {
     inputField.type = "text";
     inputField.value = translatedWord.innerText;
     inputField.classList.add("edit-input");
-    
+
     box.replaceChild(inputField, translatedWord);
 
     inputField.focus();

@@ -22,8 +22,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin: auto;
+  width: 95%;
+  padding: 0 15px; /* Adjust as necessary */
 }
 
 
@@ -171,6 +171,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between; /* This spreads out the input and button */
+  width: 100%; /* Use available space */
 }
 
 .save_vocab {
@@ -189,8 +191,8 @@ body {
   border: 2px solid #f0f0f0;
   border-inline-end: none;
   flex-grow: 1; /* This will allow the input field to fill the available space */
-  margin: 0 10px; /* Add some space around the input field */
 }
+
 .save_vocab button {
   width: 26%;
   padding: 6px;
@@ -298,17 +300,13 @@ body {
 }
 
 
-
-
-
 .language-select {
   padding: 6px;
-  font-size: 16px; /* Match the font size of the input field */
-  border: 2px solid #f0f0f0; /* Match the border style of the input field */
-  border-radius: 5px; /* Match the border radius of the input field */
+  font-size: 16px;
+  border: 2px solid #f0f0f0;
+  border-radius: 5px;
   outline: none;
-  margin-bottom: 10px; /* Space between dropdown and the next input field */
-  width: 40%; /* Match the width of the input field, adjust the calc() as needed */
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
   cursor: pointer;
+  /* Adjust width to fit the dropdown nicely between the button and search field */
+  width: auto; 
 }

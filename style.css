@@ -249,3 +249,35 @@ body {
 #settings_language img {
   display: block;
 }
+
+.class_vocab .editButton {
+  position: absolute;
+  top: 25px; /* Adjust this to place it under the delete button */
+  right: 0;
+  width: 22px;
+  height: 22px;
+  display: none;
+  place-items: center;
+  background: #4da6ff; /* Choose a different color for distinction */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.class_vocab .editButton img {
+  width: 15px;
+}
+
+.class_vocab .box:hover .editButton {
+  display: grid;
+  opacity: 1;
+}
+
+
+.edit-input {
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

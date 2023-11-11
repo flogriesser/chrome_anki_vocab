@@ -152,6 +152,33 @@ addWordForm.onsubmit = (e) => {
     addWordInput.value = "";
   }
 };
+
+function saveEditedWord(inputField, wordObj, box, translatedWordDiv) {
+  const editedValue = inputField.value.trim();
+  
+  // Check if the value has changed
+  if (editedValue !== wordObj.translated) {
+      // Update the wordObj
+      wordObj.translated = editedValue;
+
+      // Update the storage
+      chrome.storage.local.get("words", function (data) {
+          const words = data.words || [];
+          const index = words.findIndex(w => w.original === wordObj.original);
+          if (index !== -1) {
+              words[index] = wordObj;
+              chrome.storage.local.set({ words: words });
+          }
+      });
+
+      // Update the UI
+      translatedWordDiv.innerText = editedValue;
+  }
+
+  // Replace the input field with the updated translated word div
+  box.replaceChild(translatedWordDiv, inputField);
+}
+
   
 
 const empty = document.createElement("p");
@@ -186,6 +213,13 @@ const word = (wordObj) => {
   deleteImg.title = "Delete word";
   deleteButton.appendChild(deleteImg);
   box.appendChild(deleteButton);
+  const editButton = document.createElement("div");
+  editButton.classList.add("editButton");
+  const editImg = document.createElement("img");
+  editImg.src = "images/edit-pen-icon.svg";
+  editImg.title = "Edit word";
+  editButton.appendChild(editImg);
+  box.appendChild(editButton);
 
   const con_words = document.querySelector(".class_vocab");
 
@@ -208,6 +242,24 @@ const word = (wordObj) => {
           }
       });
   };
+
+  editButton.onclick = () => {
+    const inputField = document.createElement("input");
+    inputField.type = "text";
+    inputField.value = translatedWord.innerText;
+    inputField.classList.add("edit-input");
+    
+    // Replace the translated word div with the input field
+    box.replaceChild(inputField, translatedWord);
+
+    // Focus on the input field and select the text
+    inputField.focus();
+    inputField.select();
+
+    // Handle saving the new value
+    inputField.addEventListener("blur", () => saveEditedWord(inputField, wordObj, box, translatedWord));
+  };
+
 };
 
 

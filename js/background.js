@@ -6,49 +6,31 @@ var context = {
 
 chrome.contextMenus.create(context, () => chrome.runtime.lastError);
 
-/*
 function addWordAndTranslation(inputValue) {
-  let translatedValue = inputValue + '_translated';
+  const apiUrl = 'https://translate.googleapis.com/translate_a/single';
+  const params = new URLSearchParams([
+    ["client", "gtx"],
+    ["sl", "auto"], // Source language auto-detection
+    ["tl", "en"],  // Target language set to English
+    ["dt", "t"],   // Requesting translation
+    ["q", inputValue]
+  ]);
 
-  chrome.storage.local.get("words", function (data) {
-    let words = data.words || [];
-    if (!words.some(wordObj => wordObj.original === inputValue)) {
-      words.push({ original: inputValue, translated: translatedValue });
-      chrome.storage.local.set({ words: words }, function () {
-        console.log("worker.js: New word added:", inputValue);
-        console.log("worker.js: Words stored:", words);
-      });
-    } else {
-      console.log("worker.js: Word already exists:", inputValue);
-    }
-  });
-}
-*/
-
-function addWordAndTranslation(inputValue) {
-  // Translate the text using 'auto' for automatic source language detection
-  fetch('https://libretranslate.com/translate', {
-    method: 'POST',
-    body: JSON.stringify({
-      q: inputValue,
-      source: 'auto', // Use 'auto' for automatic source language detection
-      target: 'de', // Replace 'en' with your desired target language
-      format: 'text'
-    }),
-    headers: { 'Content-Type': 'application/json' }
+  fetch(`${apiUrl}?${params.toString()}`, {
+    method: 'GET',
   })
   .then(response => response.json())
   .then(data => {
-    let translatedValue = data.translatedText || "No translation";
+    let translatedText = data[0][0][0] || "No translation";
+    //console.log(`${apiUrl}?${params.toString()}`);
 
-    // Continue with storing the translated word as before
+
     chrome.storage.local.get("words", function (result) {
       let words = result.words || [];
       if (!words.some(wordObj => wordObj.original === inputValue)) {
-        words.push({ original: inputValue, translated: translatedValue });
+        words.push({ original: inputValue, translated: translatedText });
         chrome.storage.local.set({ words: words }, function () {
           console.log("New word added:", inputValue);
-          console.log("New word translated:", translatedValue);
           console.log("Words stored:", words);
         });
       } else {
@@ -58,11 +40,12 @@ function addWordAndTranslation(inputValue) {
   })
   .catch(error => {
     console.error('Error translating word:', error);
-    // Still save the word with "No translation" if an error occurred
+    let translatedValue = "No translation";
+
     chrome.storage.local.get("words", function (result) {
       let words = result.words || [];
       if (!words.some(wordObj => wordObj.original === inputValue)) {
-        words.push({ original: inputValue, translated: "No translation" });
+        words.push({ original: inputValue, translated: translatedValue });
         chrome.storage.local.set({ words: words }, function () {
           console.log("New word added with no translation:", inputValue);
         });
@@ -70,6 +53,7 @@ function addWordAndTranslation(inputValue) {
     });
   });
 }
+
 
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {

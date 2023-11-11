@@ -23,18 +23,18 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 95%;
-  padding: 0 15px; /* Adjust as necessary */
+  padding: 0 15px;
 }
 
 
-.head_save_words_extension > div {
+.head_save_words_extension>div {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
 
-.head_save_words_extension > div:nth-child(3) {
+.head_save_words_extension>div:nth-child(3) {
   justify-content: flex-end;
 }
 
@@ -95,18 +95,18 @@ body {
   margin: 0 15px;
 }
 
-.class_vocab .deleteButton{
+.class_vocab .deleteButton {
   display: none;
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   width: 22px;
   height: 22px;
   display: grid;
   place-items: center;
-  background:#f15252;
+  background: #f15252;
   border-radius: 5px 5px 5px 5px;
-   
+
   cursor: pointer;
 }
 
@@ -114,7 +114,7 @@ body {
   display: grid;
 }
 
-.class_vocab .deleteButton img{
+.class_vocab .deleteButton img {
   width: 15px;
 }
 
@@ -171,15 +171,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* This spreads out the input and button */
-  width: 100%; /* Use available space */
+  justify-content: space-between;
+  width: 100%;
 }
 
 .save_vocab {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  
+
 }
 
 .save_vocab input {
@@ -190,7 +190,7 @@ body {
   border-radius: 5px 0 0 5px;
   border: 2px solid #f0f0f0;
   border-inline-end: none;
-  flex-grow: 1; /* This will allow the input field to fill the available space */
+  flex-grow: 1;
 }
 
 .save_vocab button {
@@ -260,7 +260,7 @@ body {
 
 .class_vocab .editButton {
   position: absolute;
-  top: 25px; /* Adjust this to place it under the delete button */
+  top: 25px;
   right: 0;
   width: 22px;
   height: 22px;
@@ -292,7 +292,7 @@ body {
 
 .save_vocab select {
   padding: 6px;
-  margin-right: 10px; /* Space between dropdown and button */
+  margin-right: 10px;
   border: 2px solid #f0f0f0;
   border-radius: 5px;
   outline: none;
@@ -307,6 +307,5 @@ body {
   border-radius: 5px;
   outline: none;
   cursor: pointer;
-  /* Adjust width to fit the dropdown nicely between the button and search field */
-  width: auto; 
+  width: auto;
 }

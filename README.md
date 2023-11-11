@@ -1,6 +1,8 @@
 # chrome_anki_vocab
 
-Chrome Extension to add vocabulary to an anki deck
+Chrome Extension to add vocabulary to an anki deck.
+
+Easily save words and get instant translations. Review, export for Anki, and accelerate language learning.
 
 For usage just import this folder via chrome://extensions/ 
 

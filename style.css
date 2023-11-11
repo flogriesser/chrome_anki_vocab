@@ -1,0 +1,251 @@
+body {
+  width: 400px;
+  max-width: 500px;
+  min-height: 400px;
+  max-height: 600px;
+  background: white;
+  z-index: 100000;
+  padding: 15px;
+  overflow: auto;
+  font-family: tahoma;
+  direction: ltr;
+  position: relative;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+
+.head_save_words_extension {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+
+.head_save_words_extension > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+
+.head_save_words_extension > div:nth-child(3) {
+  justify-content: flex-end;
+}
+
+#settings_language {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+#settings_language img {
+  display: block;
+}
+
+
+
+.head_save_words_extension .heading {
+  font-weight: bold;
+  user-select: none;
+  font-size: 30px;
+  margin: 0;
+}
+
+.class_vocab {
+  margin-top: 30px;
+  padding-bottom: 15px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.class_vocab .box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: #f2f4f6;
+  border-radius: 5px;
+  position: relative;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.class_vocab .word {
+  flex: 1;
+  text-align: center;
+  padding: 0 10px;
+  text-transform: capitalize;
+}
+
+.class_vocab .divider {
+  height: 100%;
+  width: 2px;
+  background-color: #000;
+  margin: 0 15px;
+}
+
+.class_vocab .deleteButton{
+  display: none;
+  position: absolute;
+  top:0;
+  right:0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background:#f15252;
+  border-radius: 5px 5px 5px 5px;
+   
+  cursor: pointer;
+}
+
+.class_vocab .box:hover .deleteButton {
+  display: grid;
+}
+
+.class_vocab .deleteButton img{
+  width: 15px;
+}
+
+
+
+.class_vocab .deleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  display: none;
+  place-items: center;
+  background: #f32e2e;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.class_vocab .deleteButton img {
+  width: 15px;
+}
+
+.class_vocab .box:hover .deleteButton {
+  display: grid;
+  opacity: 1;
+}
+
+
+#download_csv {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  padding-block: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border-radius: 30px;
+  font-weight: bold;
+  background-color: #6eec7f;
+  color: white;
+}
+
+#download_csv .download-icon {
+  transform: rotate(180deg);
+  margin-right: 5px;
+  width: auto;
+  height: 1em;
+}
+
+.anki_vocab_extension {
+  position: relative;
+}
+
+.save_vocab {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.save_vocab input {
+  width: 65%;
+  padding: 6px;
+  outline: none;
+
+  border-radius: 5px 0 0 5px;
+  border: 2px solid #f0f0f0;
+  border-inline-end: none;
+}
+.save_vocab button {
+  width: 26%;
+  padding: 6px;
+  cursor: pointer;
+  border: none;
+  background-color: #6eec7f;
+  color: white;
+  border: 2px solid #6eec7f;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+}
+
+#id_word_exists {
+  position: absolute;
+  bottom: -15px;
+  margin: 0;
+  color: rgb(176, 8, 8);
+}
+
+.no_words {
+  display: block;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: #959595;
+}
+
+.pagebreak {
+  break-inside: avoid;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+#settings_language {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+#settings_language img {
+  display: block;
+}

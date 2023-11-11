@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="the_page_save_words_extension pagebreak">
+    <div class="head_save_words_extension">
+      <div>
+        <button id="download_csv">
+          <img src="images/download-white.svg " class="download-icon"/>
+          Export
+        </button>
+      </div>
+
+      <div class="anki_vocab_extension">
+        <form action="">
+          <div class="save_vocab">
+            <input type="text" placeholder="Search or Add" />
+            <button type="submit">Add</button>
+          </div>
+
+          <p id="id_word_exists" style="display: none">
+            This word exist
+          </p>
+        </form>
+      </div>
+
+    </div>
+    <div>
+
+
+    <div class="class_vocab"></div>
+
+    </div>
+</body>
+<script src="js/popup.js"></script>
+<script src="js/download.js"></script>
+
+</html>

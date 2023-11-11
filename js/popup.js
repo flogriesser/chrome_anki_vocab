@@ -180,8 +180,6 @@ function addWordAndTranslation(inputValue) {
       .then(response => response.json())
       .then(data => {
         let translatedText = data[0][0][0] || "No translation";
-        console.log(response);
-        console.log(`${apiUrl}?${params.toString()}`);
 
         chrome.storage.local.get("words", function (result) {
           let words = result.words || [];

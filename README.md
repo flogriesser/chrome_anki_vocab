@@ -12,6 +12,9 @@ Enhance your language learning experience with the "Save to Anki" Chrome Extensi
 
 **Streamlined Learning Journey:** Designed for language enthusiasts, "Save to Anki" simplifies vocabulary acquisition, management, and revision, propelling your language skills forward.
 
+**Normal install**
+https://chrome.google.com/webstore/detail/anki-vocabulary/kllcgbpnofmhokdemkejfnfnmidmnhfd
+
 **Getting Started:**
 
 1. Clone or download the extension folder.
